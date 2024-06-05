@@ -44,7 +44,7 @@ This project is a simple web scraper built with Node.js for fetching and display
 
    The server will run on http://localhost:3000 by default.
 
-2. Serve the frontend:
+2. Serve the frontend (Optional):
 
    ```bash
    npx http-server . -c-1
@@ -52,6 +52,6 @@ This project is a simple web scraper built with Node.js for fetching and display
 
    Open your web browser and go to http://localhost:8080 to access the frontend.
 
-   OR simply open the index.html file directly.
+   OR simply open the index.html file directly.(Serverless front-end).
 
 4. Enter a keyword in the input field and click the "Search" button to initiate the scraping process.
