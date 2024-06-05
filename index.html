@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amazon Scraper</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            max-width: 600px;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            width: 100%;
+        }
+        .input-group {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px 0 0 5px;
+            outline: none;
+        }
+        button {
+            padding: 10px;
+            border: none;
+            background: #28a745;
+            color: #fff;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #218838;
+        }
+        .results {
+            margin-top: 20px;
+        }
+        .product {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .product img {
+            max-width: 100px;
+            display: block;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="input-group">
+            <input type="text" id="keyword" placeholder="Enter keyword">
+            <button onclick="scrape()">Search</button>
+        </div>
+        <div id="results" class="results"></div>
+    </div>
+
+    <script>
+        async function scrape() {
+            const keyword = document.getElementById('keyword').value;
+            if (!keyword) {
+                alert('Please enter a keyword');
+                return;
+            }
+
+            try {
+                const response = await fetch(`http://localhost:3000/api/scrape?keyword=${keyword}`);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const text = await response.text();
+                console.log('Raw response:', text); // Log raw response for debugging
+
+                const products = JSON.parse(text);
+                const results = document.getElementById('results');
+                results.innerHTML = '';
+
+                if (products.length === 0) {
+                    results.innerHTML = '<p>No products found.</p>';
+                    return;
+                }
+
+                products.forEach(product => {
+                    const productDiv = document.createElement('div');
+                    productDiv.classList.add('product');
+                    productDiv.innerHTML = `
+                        <img src="${product.image}" alt="${product.title}">
+                        <h3>${product.title}</h3>
+                        <p>Rating: ${product.rating}</p>
+                        <p>Reviews: ${product.reviewCount}</p>
+                    `;
+                    results.appendChild(productDiv);
+                });
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                alert('Failed to fetch data. Please try again later.');
+            }
+        }
+    </script>
+</body>
+</html>
