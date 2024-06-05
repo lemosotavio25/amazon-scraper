@@ -52,16 +52,6 @@ This project is a simple web scraper built with Node.js for fetching and display
 
    Open your web browser and go to http://localhost:8080 to access the frontend.
 
-   OR
-   ```bash
-Simply open the index.html file directly.
+   OR simply open the index.html file directly.
 
 4. Enter a keyword in the input field and click the "Search" button to initiate the scraping process.
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a pull request or open an issue if you encounter any problems.
-
-## License
-
-This project is licensed under the MIT License.
